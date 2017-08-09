@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-public class HTMLProcessorTest extends HTMLProcessorJsoup {
+public class IntegrationTest extends HTMLProcessorJsoup {
 
     PageLoader loader = new PageLoaderJsoup();
     LinksExtractor extractor = new LinksExtractorJsoup();
