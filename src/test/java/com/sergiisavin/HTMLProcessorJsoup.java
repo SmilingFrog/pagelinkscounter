@@ -13,41 +13,19 @@ import java.util.Map;
 import java.util.Set;
 
 public class HTMLProcessorJsoup implements HTMLProcessor {
-
-    protected Map<String,Integer> countLinks(Map<String, DomainLinks> links) {
-        Map<String, Integer> linksCount = new HashMap<>();
-        for(String linkHref : links.keySet()){
-            DomainLinks domainLink = links.get(linkHref);
-            int numberOfLinks = domainLink.getSize();
-            linksCount.put(linkHref, numberOfLinks);
-        }
-        return linksCount;
-    }
-
-    protected Map<String, DomainLinks> process(String html) {
-
-        Map<String, DomainLinks> links = new HashMap<>();
-
-        Set<String> aTagHrefs = extractLinks(html);
-
-        fillDomainLinks(links, aTagHrefs);
-
-        return links;
-    }
-
+    
     private void fillDomainLinks(Map<String, DomainLinks> links, Set<String> aTagHrefs) {
         for(String aTagHref : aTagHrefs){
             try {
-                URL url = new URL(aTagHref);
-                String linkHostStr = url.getHost();
-                DomainLinks link = links.get(linkHostStr);
+                String hostName = getHostName(aTagHref);
+                DomainLinks link = links.get(hostName);
                 if(link == null){
                     link = new DomainLinks();
                     link.add(aTagHref);
-                    links.put(linkHostStr, link);
+                    links.put(hostName, link);
                 }else{
                     link.add(aTagHref);
-                    links.put(linkHostStr, link);
+                    links.put(hostName, link);
                 }
 
             } catch (MalformedURLException e) {
@@ -56,55 +34,16 @@ public class HTMLProcessorJsoup implements HTMLProcessor {
         }
     }
 
-    private Set<String> extractLinks(String html) {
-        Set<String> aTagHrefs = new HashSet<>();
-        Elements parsedLinks = getElements(html);
-        for(Element parsedLink : parsedLinks){
-            String aTagHref = parsedLink.attr("abs:href");
-            if(isNotEmptyString(aTagHref)){
-                String protocol = getProtocol(aTagHref);
-                if(protocol.equals("http") && isNotDuplikateHref(aTagHref, aTagHrefs)){
-                    aTagHrefs.add(aTagHref);
-                }
-            }
-        }
-        return aTagHrefs;
+    private String getHostName(String aTagHref) throws MalformedURLException {
+        URL url = new URL(aTagHref);
+        return url.getHost();
     }
 
-    private boolean isNotDuplikateHref(String aTagHref, Set<String> aTagHrefs) {
-        return !(endsInSlash(aTagHref) &&
-                aTagHrefs.contains(getATagHrefWithoutEndingSlash(aTagHref))) ||
-                (aTagHrefs.contains(getATagWithEndingSlash(aTagHref)));
-    }
 
-    private boolean isNotEmptyString(String aTagHref) {
-        return aTagHref != "";
-    }
-
-    private Elements getElements(String html) {
-        Document document = Jsoup.parse(html);
-        return document.select("a[href]");
-    }
-
-    private String getATagWithEndingSlash(String aTagHref) {
-        return aTagHref + "/";
-    }
-
-    private String getATagHrefWithoutEndingSlash(String aTagHref) {
-        return aTagHref.substring(0, aTagHref.length()-1);
-    }
-
-    private boolean endsInSlash(String aTagHref) {
-        return aTagHref.charAt(aTagHref.length()-1) == '/';
-    }
-
-    private String getProtocol(String aTagHref) {
-        String protocol = null;
-        try {
-            protocol = new URL(aTagHref).getProtocol();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return protocol;
+    @Override
+    public Map<String, DomainLinks> process(Set<String> aTagHrefs) {
+        Map<String, DomainLinks> links = new HashMap<>();
+        fillDomainLinks(links, aTagHrefs);
+        return links;
     }
 }

@@ -7,12 +7,15 @@ import java.util.*;
 public class HTMLProcessorTest extends HTMLProcessorJsoup {
 
     PageLoader loader = new PageLoaderJsoup();
+    LinksExtractor extractor = new LinksExtractorJsoup();
+    LinksCounter counter = new LinksCounterJsoup();
 
     @Test
     public void canProcessHTML() throws Exception {
         String html = loader.loadPage("http://www.pravda.com.ua");
-        Map<String, DomainLinks> links = process(html);
-        Map<String, Integer> linksCount = countLinks(links);
+        Set<String> extractedLinks = extractor.extractLinks(html);
+        Map<String, DomainLinks> links = process(extractedLinks);
+        Map<String, Integer> linksCount = counter.countLinks(links);
         printLinks(links);
         printLinksCount(linksCount);
 
