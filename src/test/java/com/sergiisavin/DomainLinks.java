@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LinkHost implements Iterable<String>{
+public class DomainLinks implements Iterable<String>{
     List<String> hrefs;
 
-    public LinkHost(){
+    public DomainLinks(){
         hrefs = new ArrayList<>();
     }
 

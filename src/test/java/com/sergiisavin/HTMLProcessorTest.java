@@ -18,15 +18,16 @@ public class HTMLProcessorTest {
     @Test
     public void canProcessHTML() throws Exception {
         String html = loader.loadPage("http://www.pravda.com.ua");
-        Map<String, LinkHost> links = process(html);
+        Map<String, DomainLinks> links = process(html);
         printLinks(links);
+
     }
 
-    private void printLinks(Map<String, LinkHost> links) {
+    private void printLinks(Map<String, DomainLinks> links) {
         for (String linkHref : links.keySet()) {
             System.out.println();
             System.out.println(linkHref);
-            LinkHost linkHost = links.get(linkHref);
+            DomainLinks linkHost = links.get(linkHref);
             Iterator iterator = linkHost.iterator();
             while (iterator.hasNext()) {
                 System.out.printf("\t %s\n", iterator.next());
@@ -34,9 +35,9 @@ public class HTMLProcessorTest {
         }
     }
 
-    private Map<String, LinkHost> process(String html) {
+    private Map<String, DomainLinks> process(String html) {
 
-        Map<String, LinkHost> links = new HashMap<>();
+        Map<String, DomainLinks> links = new HashMap<>();
 
         Set<String> aTagHrefs = extractLinks(html);
 
@@ -44,9 +45,9 @@ public class HTMLProcessorTest {
             try {
                 URL url = new URL(aTagHref);
                 String linkHostStr = url.getHost();
-                LinkHost link = links.get(linkHostStr);
+                DomainLinks link = links.get(linkHostStr);
                 if(link == null){
-                    link = new LinkHost();
+                    link = new DomainLinks();
                     link.add(aTagHref);
                     links.put(linkHostStr, link);
                 }else{
