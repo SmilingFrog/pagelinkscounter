@@ -1,16 +1,10 @@
 package com.sergiisavin;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.Test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
-public class HTMLProcessorTest extends HTMLProcessor {
+public class HTMLProcessorTest extends HTMLProcessorJsoup {
 
     PageLoader loader = new PageLoaderJsoup();
 
