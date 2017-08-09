@@ -1,4 +1,4 @@
-package com.sergiisavin;
+package com.sergiisavin.pageloader;
 
 import org.jsoup.Jsoup;
 

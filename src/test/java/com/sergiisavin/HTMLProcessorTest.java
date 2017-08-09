@@ -1,5 +1,13 @@
 package com.sergiisavin;
 
+import com.sergiisavin.domainlinks.DomainLinks;
+import com.sergiisavin.htmlprocessor.HTMLProcessorJsoup;
+import com.sergiisavin.linkscounter.LinksCounter;
+import com.sergiisavin.linkscounter.LinksCounterJsoup;
+import com.sergiisavin.linksextractor.LinksExtractor;
+import com.sergiisavin.linksextractor.LinksExtractorJsoup;
+import com.sergiisavin.pageloader.PageLoader;
+import com.sergiisavin.pageloader.PageLoaderJsoup;
 import org.junit.Test;
 
 import java.util.*;

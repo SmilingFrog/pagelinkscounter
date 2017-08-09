@@ -1,4 +1,4 @@
-package com.sergiisavin;
+package com.sergiisavin.domainlinks;
 
 import java.util.ArrayList;
 import java.util.Iterator;

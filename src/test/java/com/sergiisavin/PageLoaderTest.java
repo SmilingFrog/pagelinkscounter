@@ -1,10 +1,7 @@
 package com.sergiisavin;
 
-import org.jsoup.Jsoup;
+import com.sergiisavin.pageloader.PageLoaderJsoup;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 

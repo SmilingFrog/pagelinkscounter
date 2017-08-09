@@ -1,4 +1,4 @@
-package com.sergiisavin;
+package com.sergiisavin.linksextractor;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
