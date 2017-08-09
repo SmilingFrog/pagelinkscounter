@@ -30,4 +30,8 @@ public class DomainLinks implements Iterable<String>{
             }
         };
     }
+
+    public int getSize() {
+        return hrefs.size();
+    }
 }
