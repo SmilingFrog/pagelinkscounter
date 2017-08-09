@@ -19,14 +19,17 @@ public class HTMLProcessorTest {
     public void canProcessHTML() throws Exception {
         String html = loader.loadPage("http://www.pravda.com.ua");
         Map<String, LinkHost> links = process(html);
+        printLinks(links);
+    }
 
-        for(String linkHref : links.keySet()){
+    private void printLinks(Map<String, LinkHost> links) {
+        for (String linkHref : links.keySet()) {
             System.out.println();
             System.out.println(linkHref);
             LinkHost linkHost = links.get(linkHref);
             Iterator iterator = linkHost.iterator();
-            while(iterator.hasNext()){
-            System.out.printf("\t %s\n", iterator.next());
+            while (iterator.hasNext()) {
+                System.out.printf("\t %s\n", iterator.next());
             }
         }
     }
